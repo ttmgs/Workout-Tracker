@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path')
+const mongoose = require('mongoose');
 const app = express();
 
-const PORT = process.env.PORT || 8080;
 
+const PORT = process.env.PORT || 8080;
 
 
 
@@ -11,13 +12,20 @@ const PORT = process.env.PORT || 8080;
 app.use(express.static(__dirname));
 app.use(express.static(path.join(__dirname, '/public')));
 
-
+// json data parsing
+app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
 
 
 // api routes
-app.use('/exercise', require('./routes/api'));
-app.get('/api/workout', require('./routes/api'));
+app.use('/exercise', require('./public/stats'));
+app.get('/api/workout', require('./public/stats'));
 
+// connecting to mongoose
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { 
+  useNewUrlParser: true,
+  useFindAndModify: false
+});
 
 
 

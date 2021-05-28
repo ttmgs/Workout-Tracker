@@ -1,6 +1,9 @@
+const fetch = require("node-fetch");
+
+
 // get all workout data from back-end
 
-fetch("/api/workouts/range")
+fetch("/api/workouts")
   .then(response => {
     return response.json();
   })
